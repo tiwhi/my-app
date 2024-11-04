@@ -11,4 +11,18 @@ const pool = new Pool({
 	}
 });
 
-export default pool;
+async function connectToDB() {
+	// if (building) {
+	// 	return null;
+	// }
+	const pool = new pg.Pool({
+		connectionString,
+		ssl: {
+			rejectUnauthorized: false // Use this only for development/testing
+		}
+	});
+
+	return pool;
+}
+
+export { pool, connectToDB };

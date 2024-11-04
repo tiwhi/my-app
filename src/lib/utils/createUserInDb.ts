@@ -1,4 +1,4 @@
-import pool from '$lib/pg_db';
+import { pool } from '$lib/pg_db';
 import { hashPassword } from '$lib/auth';
 import { FormDataUser, DBUser } from '$lib/interfaces/user_interfaces';
 

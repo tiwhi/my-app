@@ -1,4 +1,4 @@
-import pool from '$lib/pg_db';
+import { pool } from '$lib/pg_db';
 
 import type { DBUser } from '$lib/interfaces/user_interfaces';
 import type { DBMemo } from '$lib/interfaces/memo_interfaces';

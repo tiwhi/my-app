@@ -13,7 +13,12 @@ import { createMemo } from '$lib/utils/createMemoInDb';
 // TODO: write a load function to get all user memos from DB
 // handle page loading data later
 export const load: PageServerLoad = async ({ locals }) => {
-	const user = { name: 'tim', role: 'admin', id: 'a9a5ba4c-9f8f-4b85-aa87-538d0f53e4e6' };
+	if (!locals.user) {
+		throw redirect(302, '/');
+	}
+	const user: DBUser | null = await getUserByUserName(locals.user.name, locals.pool);
+
+	// const user = { name: 'tim', role: 'admin', id: 'a9a5ba4c-9f8f-4b85-aa87-538d0f53e4e6' };
 
 	// redirect if user not logged in
 	// if (!locals.user) {
@@ -39,15 +44,16 @@ export const actions = {
 		console.log('inside create_memo, event is: ', event);
 
 		// first get the verified user so we can get their memos by their user id
-		// let user = event.locals.user.name;
-		let user = { name: 'tim', role: 'admin', id: 'a9a5ba4c-9f8f-4b85-aa87-538d0f53e4e6' };
+		let locals_user = event.locals.user;
+		// let user = { name: 'tim', role: 'admin', id: 'a9a5ba4c-9f8f-4b85-aa87-538d0f53e4e6' };
+		const user: DBUser | null = await getUserByUserName(locals_user.name);
 
-		const verified_user = await getUserByUserName(user.name);
+		// const verified_user = await getUserByUserName(user.name);
 		// update this to redirect back to login page and delete cookies if it fails because that means the user is not authenticated and shouldn't be able to access anything without first logging in
-		if (!verified_user) {
+		if (!user) {
 			throw new Error('could not find user by username in db');
 		}
-		user = verified_user as DBUser;
+		// user = verified_user as DBUser;
 		// console.log('xyz user is: ', user);
 
 		// get form data

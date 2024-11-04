@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 import type { PageServerLoad } from './$types';
 
-import pool from '$lib/pg_db';
+import { pool } from '$lib/pg_db';
 
 import { comparePasswords } from '$lib/auth';
 

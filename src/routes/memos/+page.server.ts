@@ -40,6 +40,7 @@ export const actions = {
 
 		// first get the verified user so we can get their memos by their user id
 		// let user = event.locals.user.name;
+		let user = { name: 'tim', role: 'admin', id: 'a9a5ba4c-9f8f-4b85-aa87-538d0f53e4e6' };
 
 		const verified_user = await getUserByUserName(user.name);
 		// update this to redirect back to login page and delete cookies if it fails because that means the user is not authenticated and shouldn't be able to access anything without first logging in
